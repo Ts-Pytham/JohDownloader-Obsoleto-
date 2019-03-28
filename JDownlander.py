@@ -1,6 +1,6 @@
 #Con la librería TKiter
 from tkinter import *
-import tkinter as tk
+from tkinter import ttk
 from tkinter import messagebox
 from pafy import *
 raiz=Tk()#Creamos la raíz
@@ -22,9 +22,10 @@ def Enlace():
         messagebox.showwarning("Error", "El enlace es inválido")
     else:
         try:
-            URL = Label(raiz,text="Probando URL "+ enlaceu.get())
-            URL.place(x=30,y=100)
+            #URL = Label(raiz,text="Probando URL "+ enlaceu.get())
+            #URL.place(x=30,y=100)
             #--------------Creamos el título del vídeo---------------
+            global video
             video = pafy.new(enlaceu.get())
             global titulov
             titulov2 = Frame(raiz)
@@ -36,13 +37,15 @@ def Enlace():
             # creamos la barra de scroll
             barra = Scrollbar(raiz)
             global c
+            #Creamos el cavas (Dibujo para que podamos usar el label)
             c = Canvas(raiz, bg="white", relief="solid", bd=2, yscrollcommand=barra.set,height=300,width=340)
             barra.config(command=c.yview)
             barra.place(x=660, y=230, height=306)
+            #El frame nos servirá para unir el canvas y comm2
             global elframe
             elframe = Frame(c)
             c.place(x=290, y=230)
-            c.create_window(0, 0, window=elframe, anchor='nw')
+            c.create_window(0,0, window=elframe)
             global comm2
             comm2 = Label(elframe, wraplength=330,justify="left", font=("Century"),text=video.description,bg="white")
             comm2.pack()
@@ -61,7 +64,9 @@ def Enlace():
             global dislikee
             dislikee = Label(dislike, bg="white", text=f"Dislikes: {video.dislikes}", font=("Century"))
             dislikee.grid(row=0, column=2)
-
+            #----------------Botón de descarga----------------------
+            download = Button(raiz,text="Descargar",font=("Century"),bg="#1DB30A",fg="black",relief="solid",bd=1,height=2,width=10,command=dialogdescarga)
+            download.place(x=0,y=560)
         except ValueError:
             messagebox.showwarning("Error", "¡No se encontró la URL!, intente de nuevo")
         except:#Si manda error por el título
@@ -72,11 +77,17 @@ def Enlace():
             titulov2.config(bg="white", width=440, height=32, bd=2, relief="solid")
             titulov = Label(titulov2, text="Hubo un error en el título.", font=("Century"), bg="white")
             titulov.pack()
-            comm = Text(raiz)
-            comm.place(x=290, y=230)
-            comm.config(bg="white", width=35, height=12, bd=2, relief="solid")
-            comm2 = Label(comm, text=video.description, font=("Century"), bg="white")
-            comm2.pack(pady=2, padx=2)
+            barra = Scrollbar(raiz)
+            c = Canvas(raiz, bg="white", relief="solid", bd=2, yscrollcommand=barra.set, height=300, width=340)
+            barra.config(command=c.yview)
+            barra.place(x=660, y=230, height=306)
+            elframe = Frame(c)
+            c.place(x=290, y=230)
+            c.create_window(0, 0, window=elframe, anchor='nw')
+            comm2 = Label(elframe, wraplength=330, justify="left", font=("Century"), text=video.description, bg="white")
+            comm2.pack()
+            raiz.update()
+            c.config(scrollregion=c.bbox("all"))
             likem = Frame(raiz)
             likem.place(x=0, y=400)
             likem.config(bg="white", width=30, height=30, bd=2, relief="solid")
@@ -90,7 +101,8 @@ def Enlace():
 
 #-------------Funcion para crear la segunda pantalla-----------------
 def segundapantalla():
-    ventana = tk.Toplevel()
+    ventana = Toplevel()
+    ventana.resizable(0, 0)
     ventana.title("Colores de fondo")
     ventana.geometry("300x200")
     Label(ventana,text="Hex: ",font=("Comic Sans MS",10)).place(x=60,y=0)
@@ -189,6 +201,51 @@ def cambiarbg():
     except:
         print(code.get())
         return messagebox.showwarning("Error","¡El code no existe o no funciona, pruebe otro!")
+
+ # ----------------Salir de la api-descarga-------------
+def salir():
+    ventanad.destroy()
+#----------------------Descargar-------------------
+def descargar():
+    if calidad.get() == "" and formato.get() == "":
+        return messagebox.showwarning("Error","¡No has elegido una opción!")
+    elif destino.get() == "":
+        return messagebox.showwarning("Error","¡No has puesto nada en el destino!")
+    else:
+        archivo = video.getbest()
+        archivo.download()
+#-------------------Ventana de descarga-----------------
+def dialogdescarga():
+    global ventanad
+    ventanad = Toplevel()
+    ventanad.resizable(0,0)
+    ventanad.title("Descarga")
+    ventanad.geometry("600x400")
+    ventanad.config(bg="white")
+    #--------Creamos el label y el combobox de formato------
+    Label(ventanad,text="Formato:",font=("Comic Sans MS",9),bg="white").place(x=0,y=40)
+    global formato
+    formato = ttk.Combobox(ventanad,state="readonly",width=40)
+    formato["values"] = ["MP4"]
+    formato.place(x=70,y=40)
+    # --------Creamos el label y el combobox de calidad-----
+    Label(ventanad,text="Calidad:",font=("Comic Sans MS",9),bg="white").place(x=0,y=100)
+    global calidad
+    calidad = ttk.Combobox(ventanad,state="readonly",width=40)
+    calidad["values"] = ["HD (1280x720)"]
+    calidad.place(x=70,y=100)
+    # --------Creamos el label y el combobox de destino-----
+    Label(ventanad,text="Destino:",font=("Comic Sans MS",9),bg="white").place(x=0,y=160)
+    global destino
+    destino = ttk.Combobox(ventanad,width=40)
+    destino["values"] = ["JohDownloader\Videos"]
+    filepath="programa para descargar videos\Videos"
+    destino.place(x=70,y=160)
+    # --------Creamos los botones de aceptar y rechazar-----
+    aceptar = Button(ventanad,text="Aceptar",bg="white",font=("Comic Sans MS",9),width=10,command=descargar)
+    aceptar.place(x=0,y=220)
+    rech = Button(ventanad,text="Rechazar",bg="white",font=("Comic Sans MS",9),width=10,command=salir)
+    rech.place(x=120,y=220)
 #-------------------Navegación-------------------------
 code = StringVar()
 enlaceu = StringVar()
