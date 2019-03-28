@@ -26,7 +26,6 @@ Como verán se me descargó el vídeo, cabe recalcar que este programa SOLO desc
 Y esto sería todo el programa, muchas gracias por leer, si tienen alguna duda por favor avisar, este es mi primer programa "grande" que he hecho, cabe recalcar que no soy un experto en python, me considero novato pero intento hacer que todo quede bien, muchas gracias.
 
 # Agradecimientos.
-* Johan Sánchez.
 * JetBrains (creadores del IDE que usé que es el Pycharm).
 * Guido van Rossum (creador de Python).
 * Creadores de la librería Tkinter.
