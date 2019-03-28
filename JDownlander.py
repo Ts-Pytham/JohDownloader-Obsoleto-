@@ -14,6 +14,7 @@ except:
 raiz.geometry("800x650")
 raiz.config(bg="white")
 URL = ""
+color = IntVar(raiz,0)
 #-----------Función para seguir el evento--------------
 def Enlace():
     enlacecorrecto = False
@@ -84,20 +85,24 @@ def Enlace():
                 download.place(x=0,y=560)
                 botonrefresh = Button(raiz, bg="white",cursor="hand2", relief="solid", bd=2,width=2,command=refrescar)
                 botonrefresh.place(x=690, y=45)
-                if(code.get() == "#000000"):
-                    comm2.config(bg="white")
-                    c.config(bg="white")
-                    elframe.config(bg="white")
-                    like.config(bg="white")
-                    dislikee.config("white")
-                    titulov.config(bg="white")
-                else:
-                    titulov.config(bg=code.get())
-                    comm2.config(bg=code.get())
-                    c.config(bg=code.get())
-                    elframe.config(bg=code.get())
-                    like.config(bg=code.get())
-                    dislikee.config(bg=code.get())
+                if color.get() == 1:
+                    if(code.get() == "#000000"):
+                        comm2.config(bg="white")
+                        c.config(bg="white")
+                        elframe.config(bg="white")
+                        like.config(bg="white")
+                        dislikee.config("white")
+                        titulov.config(bg="white")
+                        botonrefresh.config(bg="gray")
+                        print("entró")
+                    else:
+                        titulov.config(bg=code.get())
+                        comm2.config(bg=code.get())
+                        c.config(bg=code.get())
+                        elframe.config(bg=code.get())
+                        like.config(bg=code.get())
+                        dislikee.config(bg=code.get())
+                        botonrefresh.config(bg=code.get())
         except ValueError:
             messagebox.showwarning("Error", "¡No se encontró la URL!, intente de nuevo")
 #-------------Refrescar el puto Widget Raiz--------------------------
@@ -114,7 +119,6 @@ def refrescar():
     dislike.destroy()
     download.destroy()
     refresh.set(0)
-    print("Entró a esta mierda")
 #-------------Funcion para crear la segunda pantalla-----------------
 def segundapantalla():
     ventana = Toplevel()
@@ -169,6 +173,7 @@ def cambiarbg():
             browse.config(bg=code.get())
             colorselec.config(bg=code.get())
             info.config(bg=code.get())
+            color.set(1)
             print(f"el bg es: {code.get()}")
     except:
         return messagebox.showwarning("Error","¡El code no existe o no funciona, pruebe otro!")
