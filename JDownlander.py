@@ -129,6 +129,30 @@ def segundapantalla():
     crojo.place(x=20,y=40)
     cyellow = Button(ventana,bg="yellow",width=1,command=ColorAmarillo)
     cyellow.place(x=40,y=40)
+    cblue = Button(ventana, bg="blue", width=1, command=ColorAzul)
+    cblue.place(x=60, y=40)
+    crosado = Button(ventana, bg="pink", width=1, command=ColorRosado)
+    crosado.place(x=80, y=40)
+    cnaranja = Button(ventana, bg="orange", width=1, command=ColorNaranja)
+    cnaranja.place(x=100, y=40)
+    cgris = Button(ventana, bg="gray", width=1, command=ColorGris)
+    cgris.place(x=120, y=40)
+    ccian = Button(ventana, bg="#3EA5F2", width=1, command=ColorCyan)
+    ccian.place(x=140, y=40)
+    cpurple = Button(ventana, bg="purple", width=1, command=ColorPurple)
+    cpurple.place(x=160, y=40)
+    clila = Button(ventana, bg="#9573D2", width=1, command=ColorLila)
+    clila.place(x=180, y=40)
+    cmagenta = Button(ventana, bg="#7B38F7", width=1, command=ColorMagenta)
+    cmagenta.place(x=200, y=40)
+    cverdelima = Button(ventana, bg="#08D719", width=1, command=ColorLima)
+    cverdelima.place(x=220, y=40)
+    cgranate = Button(ventana, bg="#7E100D", width=1, command=ColorGranate)
+    cgranate.place(x=240, y=40)
+    csalmon = Button(ventana, bg="#FF7E60", width=1, command=ColorSalmon)
+    csalmon.place(x=260, y=40)
+    clavanda = Button(ventana, bg="#DBCCF6", width=1, command=ColorLavanda)
+    clavanda.place(x=280, y=40)
 def ColorVerde():
     code.set("#2DFF00")
     cambiarbg()
@@ -137,6 +161,42 @@ def ColorRojo():
     cambiarbg()
 def ColorAmarillo():
     code.set("#FFFF00")
+    cambiarbg()
+def ColorAzul():
+    code.set("blue")
+    cambiarbg()
+def ColorRosado():
+    code.set("pink")
+    cambiarbg()
+def ColorNaranja():
+    code.set("orange")
+    cambiarbg()
+def ColorGris():
+    code.set("gray")
+    cambiarbg()
+def ColorPurple():
+    code.set("purple")
+    cambiarbg()
+def ColorLila():
+    code.set("#9573D2")
+    cambiarbg()
+def ColorCyan():
+    code.set("#3EA5F2")
+    cambiarbg()
+def ColorLima():
+    code.set("#08D719")
+    cambiarbg()
+def ColorMagenta():
+    code.set("#7B38F7")
+    cambiarbg()
+def ColorGranate():
+    code.set("#7E100D")
+    cambiarbg()
+def ColorSalmon():
+    code.set("#FF7E60")
+    cambiarbg()
+def ColorLavanda():
+    code.set("#DBCCF6")
     cambiarbg()
 #------------------Cambiamos el background mediante código hex---------------
 def cambiarbg():
@@ -183,6 +243,8 @@ def cambiarbg():
                     botonrefresh.config(bg=code.get())
                     print("entró")
             colorselec.config(bg=code.get())
+            if code.get() == "blue":
+                msg.config(fg="red")
     #except:
         #return messagebox.showwarning("Error","¡El code no existe o no funciona, pruebe otro!")
 
