@@ -14,7 +14,8 @@ except:
 raiz.geometry("800x650")
 raiz.config(bg="white")
 URL = ""
-color = IntVar(raiz,0)
+incolor = IntVar(0)
+incolor2= IntVar(0)
 #-----------Función para seguir el evento--------------
 def Enlace():
     enlacecorrecto = False
@@ -27,6 +28,7 @@ def Enlace():
         messagebox.showwarning("Error", "El enlace es inválido")
     else:
         try:
+            incolor.set(1)
             refresh.set(refresh.get() + 1)
             if (refresh.get() == 2):
                 messagebox.showwarning("¡Error!", "¡Primero tiene que refrescar la pagina!")
@@ -83,26 +85,11 @@ def Enlace():
                 global download
                 download = Button(raiz,text="Descargar",font=("Century"),bg="#1DB30A",fg="black",relief="solid",bd=1,height=2,width=10,command=dialogdescarga)
                 download.place(x=0,y=560)
+                global botonrefresh
                 botonrefresh = Button(raiz, bg="white",cursor="hand2", relief="solid", bd=2,width=2,command=refrescar)
                 botonrefresh.place(x=690, y=45)
-                if color.get() == 1:
-                    if(code.get() == "#000000"):
-                        comm2.config(bg="white")
-                        c.config(bg="white")
-                        elframe.config(bg="white")
-                        like.config(bg="white")
-                        dislikee.config("white")
-                        titulov.config(bg="white")
-                        botonrefresh.config(bg="gray")
-                        print("entró")
-                    else:
-                        titulov.config(bg=code.get())
-                        comm2.config(bg=code.get())
-                        c.config(bg=code.get())
-                        elframe.config(bg=code.get())
-                        like.config(bg=code.get())
-                        dislikee.config(bg=code.get())
-                        botonrefresh.config(bg=code.get())
+                if incolor2.get() == 1:
+                    cambiarbg()
         except ValueError:
             messagebox.showwarning("Error", "¡No se encontró la URL!, intente de nuevo")
 #-------------Refrescar el puto Widget Raiz--------------------------
@@ -118,6 +105,7 @@ def refrescar():
     dislikee.destroy()
     dislike.destroy()
     download.destroy()
+    botonrefresh.destroy()
     refresh.set(0)
 #-------------Funcion para crear la segunda pantalla-----------------
 def segundapantalla():
@@ -152,7 +140,7 @@ def ColorAmarillo():
     cambiarbg()
 #------------------Cambiamos el background mediante código hex---------------
 def cambiarbg():
-    try:
+    #try:
         if code.get() == "#000000":
             raiz.config(bg="black")
             msg.config(bg="black")
@@ -171,12 +159,32 @@ def cambiarbg():
             cblanco.config(bg=code.get())
             botonprincipal.config(bg=code.get())
             browse.config(bg=code.get())
-            colorselec.config(bg=code.get())
             info.config(bg=code.get())
-            color.set(1)
             print(f"el bg es: {code.get()}")
-    except:
-        return messagebox.showwarning("Error","¡El code no existe o no funciona, pruebe otro!")
+            print(f" El bolean es {incolor}")
+            incolor2.set(1)
+            if incolor.get() == 1:
+                if (code.get() == "#000000"):
+                    comm2.config(bg="white")
+                    c.config(bg="white")
+                    elframe.config(bg="white")
+                    like.config(bg="white")
+                    dislikee.config("white")
+                    titulov.config(bg="white")
+                    botonrefresh.config(bg="gray")
+                    print(incolor)
+                else:
+                    titulov.config(bg=code.get())
+                    comm2.config(bg=code.get())
+                    c.config(bg=code.get())
+                    elframe.config(bg=code.get())
+                    like.config(bg=code.get())
+                    dislikee.config(bg=code.get())
+                    botonrefresh.config(bg=code.get())
+                    print("entró")
+            colorselec.config(bg=code.get())
+    #except:
+        #return messagebox.showwarning("Error","¡El code no existe o no funciona, pruebe otro!")
 
  # ----------------Salir de la api-descarga-------------
 def salir():
